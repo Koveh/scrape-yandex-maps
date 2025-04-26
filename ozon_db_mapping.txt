@@ -1,0 +1,28 @@
+Отображение данных OZON в схему базы данных
+=============================================
+
+1. Таблица stocks (основная информация о компании)
+   - ticker: OZON
+   - isin: US69269L1044
+   - name: Ozon Holdings PLC
+   - sector_id: Требуется определить из таблицы sectors
+   - industry_id: Требуется определить из таблицы industries
+   - exchange_id: Требуется определить из таблицы exchanges
+   - currency: rub
+   - country: US
+
+2. Таблица stock_prices (текущие цены)
+   - price: 3486.5
+   - timestamp: 2025-04-04 20:49:52.816671
+
+3. Таблица stock_intraday (внутридневные данные)
+   - Доступно записей: 130
+   - interval_minutes: 60 (часовые данные)
+
+4. Таблица stock_daily_performance (ежедневные данные)
+   - Доступно записей: 22
+
+5. Таблица stock_orderbook (стакан заявок)
+   - depth: 20
+   - last_price: 3486.5
+   - close_price: 3500.0

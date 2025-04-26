@@ -1,0 +1,12 @@
+[Unit]
+Description=Fullinfo: update full info for Russian stocks daily
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/root/database/investments-koveh
+ExecStart=/root/database/investments-koveh/tink_env/bin/python3 fullinfo.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target 

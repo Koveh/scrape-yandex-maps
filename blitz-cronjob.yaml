@@ -1,0 +1,36 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: blitz-fetch
+spec:
+  schedule: "*/2 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: blitz-fetch
+            image: python:3.12
+            command: ["python", "/app/fetch_blitz.py", "once"]
+            env:
+            - name: POSTGRES_DB
+              value: "investments_koveh"
+            - name: POSTGRES_USER
+              value: "postgres"
+            - name: POSTGRES_PASSWORD
+              value: "Daniil77Daniil"
+            - name: POSTGRES_HOST
+              value: "db"
+            - name: POSTGRES_PORT
+              value: "5432"
+            # - name: TINKOFF_TOKEN
+            #   value: "your_token_here"
+            volumeMounts:
+            - name: app-code
+              mountPath: /app
+          restartPolicy: OnFailure
+          volumes:
+          - name: app-code
+            hostPath:
+              path: /root/database/investments-koveh
+              type: Directory 

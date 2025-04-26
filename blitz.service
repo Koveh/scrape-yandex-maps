@@ -1,0 +1,12 @@
+[Unit]
+Description=Blitz: update prices for Russian stocks every hour
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/root/database/investments-koveh
+ExecStart=/root/database/investments-koveh/tink_env/bin/python3 blitz.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target 
