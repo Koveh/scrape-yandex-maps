@@ -55,6 +55,17 @@ class YandexMapsScraper:
         options.add_argument("--window-size=1920,1080")
         options.add_argument("--start-maximized")
         
+        # Mac OS specific: Check common Chrome binary locations
+        if sys.platform == "darwin":
+            binary_locations = [
+                "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+                "/Applications/Chromium.app/Contents/MacOS/Chromium"
+            ]
+            for loc in binary_locations:
+                if os.path.exists(loc):
+                    options.binary_location = loc
+                    break
+        
         # Use a temporary user data directory to avoid conflicts
         import tempfile
         options.add_argument(f"--user-data-dir={tempfile.mkdtemp()}")
