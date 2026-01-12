@@ -41,8 +41,8 @@ A powerful, user-friendly tool to scrape business data, reviews, and photos from
 
 1.  **Clone the repository**:
     ```bash
-    git clone https://github.com/yourusername/yandex-maps-scraper.git
-    cd yandex-maps-scraper
+    git clone https://github.com/Koveh/scrape-yandex-maps.git
+    cd scrape-yandex-maps
     ```
 
 2.  **Create a virtual environment (Recommended)**:
