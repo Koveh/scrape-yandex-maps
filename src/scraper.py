@@ -198,9 +198,18 @@ class YandexMapsScraper:
             search_input.send_keys(Keys.RETURN)
             
             # Wait for results container
-            self.wait.until(EC.presence_of_element_located((
-                By.CSS_SELECTOR, ".search-list-view, .search-snippet-view"
-            )))
+            # Added robust check for StaleElementReferenceException which happens often in Safari
+            try:
+                self.wait.until(EC.presence_of_element_located((
+                    By.CSS_SELECTOR, ".search-list-view, .search-snippet-view"
+                )))
+            except StaleElementReferenceException:
+                logger.debug("Stale element in search wait, retrying...")
+                time.sleep(1)
+                self.wait.until(EC.presence_of_element_located((
+                    By.CSS_SELECTOR, ".search-list-view, .search-snippet-view"
+                )))
+                
             time.sleep(2)
         except TimeoutException:
             logger.error("Search box not found or results didn't load.")
