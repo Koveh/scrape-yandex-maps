@@ -31,6 +31,7 @@ class YandexMapsScraper:
         self.photo_format = photo_format.lower()
         self.max_photos = max_photos
         self.driver: Optional[webdriver.Chrome] = None
+        self.on_progress = None # Callback function for progress updates
         self.wait: Optional[WebDriverWait] = None
         self.data_manager = DataManager()
         self.session = requests.Session()
@@ -81,13 +82,21 @@ class YandexMapsScraper:
             self._perform_search(query)
             
             # Scroll and collect links to all places first
+            if self.on_progress:
+                self.on_progress(0, self.max_results, "Scrolling and collecting links...")
+                
             place_links = self._scroll_and_collect_results()
-            logger.info(f"📍 Found {len(place_links)} places to process")
+            total_links = len(place_links)
+            logger.info(f"📍 Found {total_links} places to process")
             
             extracted_data = []
             
             for i, link in enumerate(place_links):
-                logger.info(f"🏢 Processing place {i+1}/{len(place_links)}...")
+                msg = f"Processing place {i+1}/{total_links}"
+                logger.info(f"🏢 {msg}...")
+                
+                if self.on_progress:
+                    self.on_progress(i, total_links, msg)
                 
                 try:
                     # Normalize URL to ensure we start at the main view
@@ -110,6 +119,9 @@ class YandexMapsScraper:
                     continue
             
             # Save final results
+            if self.on_progress:
+                self.on_progress(total_links, total_links, "Saving data...")
+
             # Add metadata to each record
             for item in extracted_data:
                 item['search_query'] = query

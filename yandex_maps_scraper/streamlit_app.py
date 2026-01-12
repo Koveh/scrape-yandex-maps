@@ -210,10 +210,26 @@ if start_btn:
                     max_photos=max_photos
                 )
                 
+                # Define progress callback
+                progress_bar = st.progress(0)
+                status_text = st.empty()
+                
+                def update_progress(current, total, message):
+                    status_text.text(f"{message} ({current}/{total})")
+                    if total > 0:
+                        progress = min(current / total, 1.0)
+                        progress_bar.progress(progress)
+                
+                scraper.on_progress = update_progress
+                
                 scraper.run(full_query)
                 session_dir = scraper.data_manager.current_session_dir
                 if session_dir:
                     all_session_dirs.append(session_dir)
+                    
+                # Clear progress after completion
+                status_text.empty()
+                progress_bar.empty()
                     
             except Exception as e:
                 st.error(f"Error scraping {full_query}: {e}")
