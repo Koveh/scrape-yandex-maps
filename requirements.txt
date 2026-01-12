@@ -1,0 +1,11 @@
+selenium
+webdriver-manager
+requests
+pandas
+python-dotenv
+
+
+playwright
+streamlit
+openpyxl
+Pillow
