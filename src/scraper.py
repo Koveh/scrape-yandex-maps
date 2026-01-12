@@ -61,12 +61,25 @@ class YandexMapsScraper:
             if sys.platform == "darwin":
                 binary_locations = [
                     "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
-                    "/Applications/Chromium.app/Contents/MacOS/Chromium"
+                    "/Applications/Chromium.app/Contents/MacOS/Chromium",
+                    "/Applications/Google Chrome Canary.app/Contents/MacOS/Google Chrome Canary",
+                    "/Applications/Google Chrome Beta.app/Contents/MacOS/Google Chrome Beta",
+                    os.path.expanduser("~/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"),
+                    os.path.expanduser("~/Applications/Chromium.app/Contents/MacOS/Chromium")
                 ]
+                chrome_found = False
                 for loc in binary_locations:
                     if os.path.exists(loc):
                         options.binary_location = loc
+                        logger.info(f"Found Chrome at: {loc}")
+                        chrome_found = True
                         break
+                
+                if not chrome_found:
+                    logger.warning("Chrome binary not found in standard locations. Checked:")
+                    for loc in binary_locations:
+                        logger.warning(f"  - {loc}")
+                    logger.warning("Please ensure Google Chrome is installed, or the scraper may fail.")
             
             import tempfile
             options.add_argument(f"--user-data-dir={tempfile.mkdtemp()}")
@@ -188,32 +201,53 @@ class YandexMapsScraper:
 
     def _perform_search(self, query: str):
         """Enters the query into the search box."""
-        try:
-            # Try multiple selectors for the search input
-            search_input = self.wait.until(EC.presence_of_element_located((
-                By.CSS_SELECTOR, "input.input__control, input[type='text']"
-            )))
-            search_input.clear()
-            search_input.send_keys(query)
-            search_input.send_keys(Keys.RETURN)
-            
-            # Wait for results container
-            # Added robust check for StaleElementReferenceException which happens often in Safari
+        max_retries = 3
+        for attempt in range(max_retries):
             try:
-                self.wait.until(EC.presence_of_element_located((
-                    By.CSS_SELECTOR, ".search-list-view, .search-snippet-view"
-                )))
-            except StaleElementReferenceException:
-                logger.debug("Stale element in search wait, retrying...")
+                # Wait a bit for page to fully load (especially for Safari)
                 time.sleep(1)
-                self.wait.until(EC.presence_of_element_located((
-                    By.CSS_SELECTOR, ".search-list-view, .search-snippet-view"
+                
+                # Try multiple selectors for the search input
+                search_input = self.wait.until(EC.presence_of_element_located((
+                    By.CSS_SELECTOR, "input.input__control, input[type='text']"
                 )))
                 
-            time.sleep(2)
-        except TimeoutException:
-            logger.error("Search box not found or results didn't load.")
-            raise
+                # Retry logic for stale elements
+                try:
+                    search_input.clear()
+                    search_input.send_keys(query)
+                    search_input.send_keys(Keys.RETURN)
+                except StaleElementReferenceException:
+                    if attempt < max_retries - 1:
+                        logger.debug(f"Stale element when typing query, retry {attempt + 1}/{max_retries}")
+                        time.sleep(1)
+                        continue
+                    else:
+                        raise
+                
+                # Wait for results container
+                # Added robust check for StaleElementReferenceException which happens often in Safari
+                try:
+                    self.wait.until(EC.presence_of_element_located((
+                        By.CSS_SELECTOR, ".search-list-view, .search-snippet-view"
+                    )))
+                except StaleElementReferenceException:
+                    logger.debug("Stale element in search wait, retrying...")
+                    time.sleep(1)
+                    self.wait.until(EC.presence_of_element_located((
+                        By.CSS_SELECTOR, ".search-list-view, .search-snippet-view"
+                    )))
+                    
+                time.sleep(2)
+                break  # Success, exit retry loop
+                
+            except TimeoutException:
+                if attempt < max_retries - 1:
+                    logger.warning(f"Search timeout, retry {attempt + 1}/{max_retries}")
+                    time.sleep(2)
+                else:
+                    logger.error("Search box not found or results didn't load after retries.")
+                    raise
 
     def _scroll_and_collect_results(self) -> List[str]:
         """

@@ -35,7 +35,13 @@ A powerful, user-friendly tool to scrape business data, reviews, and photos from
 
 ### Prerequisites
 -   **Python 3.8+** installed on your system.
--   **Google Chrome** browser installed.
+-   **Web Browser**: One of the following browsers must be installed:
+    -   **Google Chrome** (recommended) - [Download](https://www.google.com/chrome/)
+    -   **Firefox** - [Download](https://www.mozilla.org/firefox/)
+    -   **Microsoft Edge** - Pre-installed on Windows
+    -   **Safari** (macOS only) - Pre-installed on macOS
+    
+    > **Note for macOS users**: If using Chrome and you get a "cannot find Chrome binary" error, make sure Chrome is installed in `/Applications/` (not in your user folder). Alternatively, use Safari which is pre-installed.
 
 ### Setup
 
@@ -77,9 +83,11 @@ This will open `http://localhost:8501` in your browser.
 -   **Region/City**: Enter the target city (e.g., "Moscow").
 -   **Search Query**: Enter the business type (e.g., "Coffee shop").
 -   **Max Results**: Limit how many places to scrape.
+-   **Browser**: Select which browser to use (Chrome, Firefox, Edge, or Safari).
 -   **Headless Mode**:
     -   **Checked (Default)**: Browser runs hidden in the background. Use this for servers or if you don't want to be disturbed.
-    -   **Unchecked**: You will see the Chrome window open and navigate automatically. Useful for debugging or seeing what's happening.
+    -   **Unchecked**: You will see the browser window open and navigate automatically. Useful for debugging or seeing what's happening.
+    -   **Note**: Safari does not fully support headless mode and will always run visibly.
 
 ### Option 2: Command Line Interface (CLI)
 
@@ -93,7 +101,13 @@ python main.py "Coffee shop Moscow" --max 10
 -   `query`: The search term (e.g., "Coffee shop Moscow").
 -   `--max`, `-m`: Maximum number of results (default: 10).
 -   `--headless`: Run without visible browser window.
+-   `--browser`: Browser to use (`chrome`, `firefox`, `edge`, or `safari`). Default: `chrome`.
 -   `--screenshots`: Capture a screenshot of each place's website (requires Playwright).
+
+**Example with browser selection:**
+```bash
+python main.py "Restaurant Moscow" --max 20 --browser firefox --headless
+```
 
 ---
 
