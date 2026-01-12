@@ -154,6 +154,8 @@ with st.sidebar:
     scrape_reviews = st.checkbox("Scrape Reviews", value=True)
     headless = st.checkbox("Headless Mode", value=True, help="Run browser in background")
     
+    browser_type = st.selectbox("Browser", ["Chrome", "Firefox", "Edge", "Safari"], index=0, help="Select the browser to use for scraping.")
+    
     st.divider()
     
     if st.button("Clear All Data", type="secondary"):
@@ -207,7 +209,8 @@ if start_btn:
                     scrape_photos=scrape_photos,
                     scrape_reviews=scrape_reviews,
                     photo_format=photo_format,
-                    max_photos=max_photos
+                    max_photos=max_photos,
+                    browser_type=browser_type
                 )
                 
                 # Define progress callback

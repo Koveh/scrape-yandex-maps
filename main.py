@@ -48,6 +48,14 @@ def main():
         help="Capture screenshots of websites after scraping"
     )
 
+    parser.add_argument(
+        "--browser",
+        type=str,
+        default="chrome",
+        choices=["chrome", "firefox", "edge", "safari"],
+        help="Browser to use for scraping"
+    )
+
     args = parser.parse_args()
 
     print("\n🗺️  Yandex Maps Scraper")
@@ -55,10 +63,11 @@ def main():
     print(f"🔎 Query: {args.query}")
     print(f"📊 Limit: {args.max} places")
     print(f"🖥️  Headless: {args.headless}")
+    print(f"🌐 Browser: {args.browser}")
     print(f"📸 Screenshots: {args.screenshots}")
     print("=================================\n")
 
-    scraper = YandexMapsScraper(headless=args.headless, max_results=args.max)
+    scraper = YandexMapsScraper(headless=args.headless, max_results=args.max, browser_type=args.browser)
     scraper.run(args.query)
 
     if args.screenshots:

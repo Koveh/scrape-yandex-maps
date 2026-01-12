@@ -23,13 +23,14 @@ class YandexMapsScraper:
     Main class for scraping Yandex Maps.
     """
 
-    def __init__(self, headless: bool = False, max_results: int = 10, scrape_photos: bool = True, scrape_reviews: bool = True, photo_format: str = "jpg", max_photos: int = 5):
+    def __init__(self, headless: bool = False, max_results: int = 10, scrape_photos: bool = True, scrape_reviews: bool = True, photo_format: str = "jpg", max_photos: int = 5, browser_type: str = "chrome"):
         self.headless = headless
         self.max_results = max_results
         self.scrape_photos = scrape_photos
         self.scrape_reviews = scrape_reviews
         self.photo_format = photo_format.lower()
         self.max_photos = max_photos
+        self.browser_type = browser_type.lower()
         self.driver: Optional[webdriver.Chrome] = None
         self.on_progress = None # Callback function for progress updates
         self.wait: Optional[WebDriverWait] = None
@@ -43,42 +44,78 @@ class YandexMapsScraper:
 
     @log_execution
     def setup_driver(self):
-        """Initializes the Chrome WebDriver with appropriate options."""
-        options = Options()
-        if self.headless:
-            options.add_argument("--headless")
-        
-        # Performance & Stability options
-        options.add_argument("--no-sandbox")
-        options.add_argument("--disable-dev-shm-usage")
-        options.add_argument("--disable-gpu")
-        options.add_argument("--window-size=1920,1080")
-        options.add_argument("--start-maximized")
-        
-        # Mac OS specific: Check common Chrome binary locations
-        if sys.platform == "darwin":
-            binary_locations = [
-                "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
-                "/Applications/Chromium.app/Contents/MacOS/Chromium"
-            ]
-            for loc in binary_locations:
-                if os.path.exists(loc):
-                    options.binary_location = loc
-                    break
-        
-        # Use a temporary user data directory to avoid conflicts
-        import tempfile
-        options.add_argument(f"--user-data-dir={tempfile.mkdtemp()}")
-        
-        # Anti-detection
-        options.add_argument("--disable-blink-features=AutomationControlled")
-        options.add_experimental_option("excludeSwitches", ["enable-automation"])
-        options.add_experimental_option('useAutomationExtension', False)
-        
-        service = Service(ChromeDriverManager().install())
-        self.driver = webdriver.Chrome(service=service, options=options)
+        """Initializes the WebDriver based on the selected browser."""
+        if self.browser_type == "chrome":
+            options = webdriver.ChromeOptions()
+            if self.headless:
+                options.add_argument("--headless")
+            
+            options.add_argument("--no-sandbox")
+            options.add_argument("--disable-dev-shm-usage")
+            options.add_argument("--disable-gpu")
+            options.add_argument("--window-size=1920,1080")
+            options.add_argument("--start-maximized")
+            
+            # Mac OS specific: Check common Chrome binary locations
+            if sys.platform == "darwin":
+                binary_locations = [
+                    "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+                    "/Applications/Chromium.app/Contents/MacOS/Chromium"
+                ]
+                for loc in binary_locations:
+                    if os.path.exists(loc):
+                        options.binary_location = loc
+                        break
+            
+            import tempfile
+            options.add_argument(f"--user-data-dir={tempfile.mkdtemp()}")
+            
+            options.add_argument("--disable-blink-features=AutomationControlled")
+            options.add_experimental_option("excludeSwitches", ["enable-automation"])
+            options.add_experimental_option('useAutomationExtension', False)
+            
+            service = Service(ChromeDriverManager().install())
+            self.driver = webdriver.Chrome(service=service, options=options)
+            
+        elif self.browser_type == "firefox":
+            from webdriver_manager.firefox import GeckoDriverManager
+            options = webdriver.FirefoxOptions()
+            if self.headless:
+                options.add_argument("--headless")
+            
+            options.add_argument("--width=1920")
+            options.add_argument("--height=1080")
+            
+            service = Service(GeckoDriverManager().install())
+            self.driver = webdriver.Firefox(service=service, options=options)
+            
+        elif self.browser_type == "edge":
+            from webdriver_manager.microsoft import EdgeChromiumDriverManager
+            options = webdriver.EdgeOptions()
+            if self.headless:
+                options.add_argument("--headless")
+            options.add_argument("--start-maximized")
+            
+            service = Service(EdgeChromiumDriverManager().install())
+            self.driver = webdriver.Edge(service=service, options=options)
+            
+        elif self.browser_type == "safari":
+            if sys.platform != "darwin":
+                raise RuntimeError("Safari is only available on macOS.")
+            
+            options = webdriver.SafariOptions()
+            # Safari doesn't support headless mode in the same way via options generally
+            # But we can try to minimize interference
+            self.driver = webdriver.Safari(options=options)
+            if self.headless:
+                logger.warning("Headless mode not fully supported for Safari. Running visible.")
+            self.driver.maximize_window()
+            
+        else:
+            raise ValueError(f"Unsupported browser: {self.browser_type}")
+
         self.wait = WebDriverWait(self.driver, 10)
-        logger.info("🖥️  WebDriver initialized")
+        logger.info(f"🖥️  {self.browser_type.title()} WebDriver initialized")
 
     @log_execution
     def run(self, query: str):
