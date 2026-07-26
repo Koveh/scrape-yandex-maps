@@ -1,0 +1,208 @@
+{
+  "updated": "2026-07-26",
+  "purpose": "Seed registry of organizers for flagship IT/data and real-estate events",
+  "organizers": [
+    {
+      "name": "Messe München",
+      "events": ["EXPO REAL 2026", "BAU 2027"],
+      "contacts": [
+        {"type": "email", "value": "info@exporeal.net"},
+        {"type": "email", "value": "sabine.wagner@messe-muenchen.de"},
+        {"type": "url", "value": "https://www.exporeal.net/en/contact/"}
+      ],
+      "priority": "high",
+      "notes": "Main EU real-estate investment fair organizer"
+    },
+    {
+      "name": "Property Forum",
+      "events": ["CEE Property Forum & Awards Gala 2026"],
+      "contacts": [
+        {"type": "email", "value": "info@property-forum.eu"},
+        {"type": "email", "value": "akos@property-forum.eu"},
+        {"type": "email", "value": "csanad@property-forum.eu"},
+        {"type": "url", "value": "https://www.property-forum.eu/sponsorship"}
+      ],
+      "priority": "high",
+      "notes": "CEE RE conferences; Vienna Nov 23-24"
+    },
+    {
+      "name": "Digital Findet Stadt",
+      "events": ["KI Con", "Innovationskongress orbit"],
+      "contacts": [
+        {"type": "email", "value": "office@digitalfindetstadt.at"},
+        {"type": "url", "value": "https://www.digitalfindetstadt.at/get-involved/partner-werden"},
+        {"type": "url", "value": "https://www.digitalfindetstadt.at/get-involved/sponsor-werden"}
+      ],
+      "priority": "high",
+      "notes": "Vienna proptech / digital construction network"
+    },
+    {
+      "name": "Wirtschaftsagentur Wien",
+      "events": ["Innovationskongress Digitales Planen Bauen", "startup programs"],
+      "contacts": [
+        {"type": "url", "value": "https://viennabusinessagency.at/team-contact/"}
+      ],
+      "priority": "high",
+      "notes": "Use official team/contact page; avoid mass-mailing personal inboxes"
+    },
+    {
+      "name": "ÖVI — Österreichischer Verband der Immobilienwirtschaft",
+      "events": ["ÖVI Bauträgertag 2026", "ImmoZert Bewertungssymposium", "Business Frühstück"],
+      "contacts": [
+        {"type": "email", "value": "office@ovi.at"},
+        {"type": "email", "value": "office@immozert.at"},
+        {"type": "url", "value": "https://www.ovi.at/kontakt"},
+        {"type": "url", "value": "https://www.ovi.at/veranstaltungen"}
+      ],
+      "priority": "high",
+      "notes": "AT RE association secretariat. Bauträgertag 26 Nov 2026 Erste Campus; ImmoZert 2026 dates TBA"
+    },
+    {
+      "name": "Informa Tech (Network X)",
+      "events": ["Network X 2026"],
+      "contacts": [
+        {"type": "email", "value": "Owen.Lochner@informa.com", "role": "Sponsorship & Exhibiting"},
+        {"type": "email", "value": "Christopher.Lycett@informa.com", "role": "Speaking"},
+        {"type": "email", "value": "Freya.Smale@informa.com", "role": "Marketing"},
+        {"type": "email", "value": "nxregistration@informa.com", "role": "Registration"},
+        {"type": "url", "value": "https://www.networkxevent.com/en/contact"}
+      ],
+      "priority": "high",
+      "notes": "Vienna 13–15 Oct 2026 at VIECON; start with Owen Lochner for exhibit/sponsor"
+    },
+    {
+      "name": "Informa (Data Center World)",
+      "events": ["Data Center World Europe 2026"],
+      "contacts": [
+        {"type": "email", "value": "DCWSales@informa.com"},
+        {"type": "email", "value": "DataCenterWorldRegistration@Informa.com"},
+        {"type": "email", "value": "DataCenterWorldMarketing@informa.com"},
+        {"type": "url", "value": "https://www.datacenterworld.com/contact"}
+      ],
+      "priority": "high",
+      "notes": "Europe edition 13–14 Oct 2026 Vienna — same Informa week as Network X"
+    },
+    {
+      "name": "Bits & Pretzels GmbH",
+      "events": ["Bits & Pretzels 2026"],
+      "contacts": [
+        {"type": "email", "value": "hello@bitsandpretzels.com"},
+        {"type": "url", "value": "https://www.bitsandpretzels.com/become-a-partner"}
+      ],
+      "priority": "high",
+      "notes": "Munich Sep 28-30 during Oktoberfest"
+    },
+    {
+      "name": "TED / Ketchum Austria",
+      "events": ["TEDAI 2026"],
+      "contacts": [
+        {"type": "email", "value": "tedai@ketchum.at"},
+        {"type": "url", "value": "https://tedai-vienna.ted.com/partners"}
+      ],
+      "priority": "medium",
+      "notes": "Local PR/partner contact for TEDAI Vienna"
+    },
+    {
+      "name": "Urban Innovation Vienna (Digital City Wien)",
+      "events": ["Digital Days 2026"],
+      "contacts": [
+        {"type": "email", "value": "digitalcity@urbaninnovation.at"},
+        {"type": "email", "value": "office@urbaninnovation.at"},
+        {"type": "url", "value": "https://digitalcity.wien/kontakt/"}
+      ],
+      "priority": "medium",
+      "notes": "City digitalisation festival 16–18 Nov 2026"
+    },
+    {
+      "name": "Slush",
+      "events": ["Slush 2026"],
+      "contacts": [
+        {"type": "email", "value": "hello@slush.org"},
+        {"type": "email", "value": "tickets@slush.org"},
+        {"type": "url", "value": "https://slush.org/audience/partners"}
+      ],
+      "priority": "medium",
+      "notes": "Helsinki Nov 18-19"
+    },
+    {
+      "name": "Fira Barcelona",
+      "events": ["Smart City Expo World Congress 2026"],
+      "contacts": [
+        {"type": "email", "value": "smartcityexpo.comms@firabarcelona.com"},
+        {"type": "email", "value": "afernandezr@firabarcelona.com"},
+        {"type": "url", "value": "https://www.smartcityexpo.com/contact/"}
+      ],
+      "priority": "medium",
+      "notes": "Barcelona Nov 3-5"
+    },
+    {
+      "name": "Big Data Conference Europe",
+      "events": ["Big Data Conference Europe 2026"],
+      "contacts": [
+        {"type": "email", "value": "info@bigdataconference.eu"},
+        {"type": "email", "value": "tickets@bigdataconference.eu"}
+      ],
+      "priority": "medium",
+      "notes": "Vilnius Nov 24-27 — practitioner data"
+    },
+    {
+      "name": "WeAreDevelopers",
+      "events": ["WeAreDevelopers World Congress 2027"],
+      "contacts": [
+        {"type": "email", "value": "partners@wearedevelopers.com"},
+        {"type": "url", "value": "https://www.wearedevelopers.com/world-congress"}
+      ],
+      "priority": "medium",
+      "notes": "Berlin Jul 14–16 2027 (2026 edition already passed)"
+    },
+    {
+      "name": "BARC",
+      "events": ["DATA festival Munich"],
+      "contacts": [
+        {"type": "email", "value": "info@barc.com"},
+        {"type": "email", "value": "jbranz@barc.com"},
+        {"type": "url", "value": "https://barc.com/events/data-festival/"}
+      ],
+      "priority": "low",
+      "notes": "2026 edition was 16–17 Jun Munich — track 2027 dates; good data/AI practitioner room"
+    },
+    {
+      "name": "GDG Vienna / DevFest",
+      "events": ["DevFest Vienna 2026"],
+      "contacts": [
+        {"type": "email", "value": "team@devfest.at"}
+      ],
+      "priority": "medium",
+      "notes": "Community conference sponsorship"
+    },
+    {
+      "name": "Austria Center Vienna",
+      "events": ["venue for large congresses"],
+      "contacts": [
+        {"type": "email", "value": "sales@acv.at"},
+        {"type": "email", "value": "office@acv.at"}
+      ],
+      "priority": "low",
+      "notes": "Venue sales — useful when hunting hosted congresses"
+    },
+    {
+      "name": "DSC DACH",
+      "events": ["DSC DACH 2026"],
+      "contacts": [
+        {"type": "url", "value": "https://dscdach.com/"},
+        {"type": "url", "value": "https://dscdach.com/partners"}
+      ],
+      "priority": "high",
+      "notes": "Partners page exists but no public email yet — watch tickets/partner CTA; LinkedIn outreach next"
+    },
+    {
+      "name": "RX Global",
+      "events": ["MIPIM", "MAPIC"],
+      "contacts": [
+        {"type": "url", "value": "https://rxglobal.com/contact-us"}
+      ],
+      "priority": "medium",
+      "notes": "Global RE festivals Cannes"
+    }
+  ]
+}
