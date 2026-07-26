@@ -1,6 +1,6 @@
 # Event organizers registry (seed)
 
-Updated: 2026-07-26 (v3)  
+Updated: 2026-07-26 (v4)  
 Purpose: first pass for outreach — who runs the rooms we care about.  
 Private report: https://my.koveh.com/articles/events-flagship-ibiza/
 
@@ -54,3 +54,8 @@ Private report: https://my.koveh.com/articles/events-flagship-ibiza/
 ## Machine-readable
 
 See `organizers.json` next to this file.
+
+
+## Also see
+
+- City scan: `15-hamburg-prague-bratislava.md` (Hamburg / Prague / Bratislava + Hannover REA)

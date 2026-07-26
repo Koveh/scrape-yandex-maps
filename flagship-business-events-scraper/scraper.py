@@ -345,6 +345,141 @@ FLAGSHIP_EVENTS: list[dict[str, Any]] = [
         "description": "Practitioner big-data / analytics conference. info@bigdataconference.eu.",
         "tags": ["DataEngineering", "Analytics", "Europe", "Flagship"],
     },
+    # --- Hamburg / North Germany ---
+    {
+        "title": "LogiNext Germany 2026",
+        "start_at": "2026-09-02",
+        "end_at": "2026-09-03",
+        "location": "Hamburg Messe, Hamburg",
+        "city": "Hamburg",
+        "country": "Germany",
+        "url": "https://www.loginext.de/en/",
+        "category": "Digital Logistics / Tech Exhibition",
+        "description": (
+            "Digital logistics innovation meetup at Hamburg Messe — software, data and "
+            "automation for supply chains. Co-located week with SMM maritime fair."
+        ),
+        "tags": ["Logistics", "Data", "Hamburg", "Exhibition", "Flagship"],
+    },
+    {
+        "title": "WindEnergy Hamburg 2026",
+        "start_at": "2026-09-22",
+        "end_at": "2026-09-25",
+        "location": "Hamburg Messe, Hamburg",
+        "city": "Hamburg",
+        "country": "Germany",
+        "url": "https://www.windenergyhamburg.com/",
+        "category": "Energy / Infrastructure Trade Fair",
+        "description": (
+            "Global onshore & offshore wind trade fair in Hamburg — useful for energy-data, "
+            "infra and industrial-software adjacency (not pure IT)."
+        ),
+        "tags": ["Energy", "Infrastructure", "Hamburg", "TradeFair", "Flagship"],
+    },
+    {
+        "title": "OMR Festival 2027",
+        "start_at": "2027-05-03",
+        "end_at": "2027-05-05",
+        "location": "Hamburg Messe, Hamburg",
+        "city": "Hamburg",
+        "country": "Germany",
+        "url": "https://omr.com/en/events/festival/",
+        "category": "Digital / Marketing Festival",
+        "description": (
+            "Europe's large digital-economy festival (~70k in 2026). Strong media and brand "
+            "density; AI/ecommerce stages. hello@omr.com / become-an-exhibitor."
+        ),
+        "tags": ["Digital", "Marketing", "Hamburg", "Media", "Flagship"],
+    },
+    {
+        "title": "REA — Real Estate Arena 2027",
+        "start_at": "2027-06-09",
+        "end_at": "2027-06-10",
+        "location": "Hannover Messe / Deutsche Messe, Hannover",
+        "city": "Hannover",
+        "country": "Germany",
+        "url": "https://www.real-estate-arena.com/",
+        "category": "Real Estate Trade Fair",
+        "description": (
+            "Germany's property fair & future conference (rebranded REA). Not Hamburg — "
+            "north-German RE hub ~1.5h from Hamburg; 2026 edition early June already passed."
+        ),
+        "tags": ["RealEstate", "Hannover", "Germany", "TradeFair", "Flagship"],
+    },
+    # --- Prague / Czechia ---
+    {
+        "title": "FOR ARCH 2026",
+        "start_at": "2026-09-16",
+        "end_at": "2026-09-19",
+        "location": "PVA EXPO PRAHA, Prague",
+        "city": "Prague",
+        "country": "Czechia",
+        "url": "https://forarch.cz/",
+        "category": "Construction / Architecture Trade Fair",
+        "description": (
+            "Largest Czech construction fair (~39k visitors). Smart/sustainable buildings; "
+            "new Fórum Stavebnictví. Organizer ABF — kontakty on forarch.cz."
+        ),
+        "tags": ["Construction", "Prague", "TradeFair", "PropTech", "Flagship"],
+    },
+    {
+        "title": "Construction Connect Prague 2026",
+        "start_at": "2026-09-17",
+        "end_at": "2026-09-19",
+        "location": "PVA EXPO PRAHA (with FOR ARCH), Prague",
+        "city": "Prague",
+        "country": "Czechia",
+        "url": "https://www.b2match.com/e/construction-connect-prague-2026",
+        "category": "Construction B2B Matchmaking",
+        "description": (
+            "B2B matchmaking alongside FOR ARCH — investors and construction/tech partners. "
+            "Free registration via b2match."
+        ),
+        "tags": ["Construction", "B2B", "Prague", "Matchmaking", "Flagship"],
+    },
+    {
+        "title": "Machine Learning Prague 2027",
+        "start_at": "2027-05-03",
+        "end_at": "2027-05-05",
+        "location": "O2 Universum, Prague",
+        "city": "Prague",
+        "country": "Czechia",
+        "url": "https://www.mlprague.com/",
+        "category": "AI / Machine Learning",
+        "description": (
+            "12th ML/AI practitioner conference (~800+). Strong engineering depth. "
+            "info@mlprague.com — note same dates as OMR Hamburg 2027."
+        ),
+        "tags": ["AI", "ML", "Prague", "Engineering", "Flagship"],
+    },
+    {
+        "title": "WebExpo 2027",
+        "start_at": "2027-05-26",
+        "end_at": "2027-05-28",
+        "location": "Prague, Czechia",
+        "city": "Prague",
+        "country": "Czechia",
+        "url": "https://webexpo.net/",
+        "category": "Web / Product / Software",
+        "description": "Major CEE web/product conference. info@webexpo.net; partners via eva@ / sarka@.",
+        "tags": ["Software", "Web", "Prague", "Product", "Flagship"],
+    },
+    # --- Bratislava / Slovakia ---
+    {
+        "title": "Jesenná ITAPA 2026",
+        "start_at": "2026-11-24",
+        "end_at": "2026-11-26",
+        "location": "Crowne Plaza Bratislava",
+        "city": "Bratislava",
+        "country": "Slovakia",
+        "url": "https://www.itapa.sk/jesenna-itapa-2026/",
+        "category": "Digitalisation / GovTech / IT",
+        "description": (
+            "Slovakia's leading tech & digitalisation conference (autumn edition). "
+            "Public sector + vendors. Partner: itapa@itapa.sk."
+        ),
+        "tags": ["Digital", "GovTech", "Bratislava", "IT", "Flagship"],
+    },
 ]
 
 
