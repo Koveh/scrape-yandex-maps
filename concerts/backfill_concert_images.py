@@ -106,10 +106,19 @@ class ConcertImageBackfill:
         if page not in self.page_images:
             self.page_images[page] = store.page_image(page)
         src = self.page_images[page]
-        if not src or is_generic_image_url(src):
+        if not src or is_generic_image_url(src) or src.startswith("data:"):
             return None
+        if src.startswith("//"):
+            src = f"https:{src}"
         if src not in self.avif_by_src:
-            self.avif_by_src[src] = store.download_image(src, url_message_id(src))
+            uploaded = store.download_image(src, url_message_id(src))
+            if uploaded:
+                self.avif_by_src[src] = uploaded
+            elif src.startswith("https://"):
+                # Durable absolute HTTPS when MinIO AVIF fails — still fills the UI.
+                self.avif_by_src[src] = src
+            else:
+                self.avif_by_src[src] = None
         return self.avif_by_src[src]
 
     @logged

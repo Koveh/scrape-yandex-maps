@@ -54,12 +54,19 @@ class StandUpStoreScraper(HtmlVenueScraper):
             start = self._date_from_slug(href) or parse_ru_date(text)
             start_time = self._time_from_slug(href) or parse_ru_time(text)
             price_from, price_to = parse_ru_price(text)
+            img = link.select_one("img[src], img[data-src]")
+            if img is None and link.parent:
+                img = link.parent.select_one("img[src], img[data-src]")
+            image_src = None
+            if img:
+                image_src = img.get("src") or img.get("data-src")
             show = self.make_show(
                 name=name,
                 url=href,
                 start=start,
                 start_time=start_time,
                 venue=self.venue,
+                image_src=image_src,
                 description=text[:500],
                 price_from=price_from,
                 price_to=price_to,

@@ -531,10 +531,20 @@ class ViennaStore:
         page_images: dict[str, str | None] = {}
 
         def cached_avif(src: str | None, key: int) -> str | None:
-            if not src or is_generic_image_url(src):
+            if not src or is_generic_image_url(src) or src.startswith("data:"):
                 return None
+            if src.startswith("//"):
+                src = f"https:{src}"
             if src not in avif_by_src:
-                avif_by_src[src] = self.download_image(src, key)
+                uploaded = self.download_image(src, key)
+                # Prefer MinIO AVIF; fall back to durable absolute HTTPS source URL.
+                if uploaded:
+                    avif_by_src[src] = uploaded
+                elif src.startswith("https://"):
+                    avif_by_src[src] = src
+                    print(f"  img fallback https {src[:100]}", flush=True)
+                else:
+                    avif_by_src[src] = None
             return avif_by_src[src]
 
         for show in shows:

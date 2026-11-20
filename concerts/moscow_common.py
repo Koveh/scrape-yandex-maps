@@ -29,6 +29,8 @@ DATE_RE = re.compile(
     r"июня|июн|июля|июл|августа|авг|сентября|сен|октября|окт|ноября|ноя|декабря|дек)",
     re.I,
 )
+# Zaryadye / calendar chips: "20.11 Пт" or "20.11.2026"
+DOT_DATE_RE = re.compile(r"\b(\d{1,2})\.(\d{1,2})(?:\.(\d{4}))?\b")
 TIME_RE = re.compile(r"\b([01]?\d|2[0-3]):([0-5]\d)\b")
 PRICE_RE = re.compile(r"(\d[\d\s]{1,7})\s*(?:₽|руб)", re.I)
 
@@ -48,17 +50,30 @@ def month_bounds(offset: int) -> tuple[date, date]:
 
 
 def parse_ru_date(text: str, *, allow_next_year: bool = True) -> date | None:
-    match = DATE_RE.search(text or "")
-    if not match:
-        return None
-    day = int(match.group(1))
-    mon = RU_MONTHS[match.group(2).lower()[:3]]
     today = date.today()
+    raw = text or ""
+    match = DATE_RE.search(raw)
+    explicit_year = False
+    if match:
+        day = int(match.group(1))
+        mon = RU_MONTHS[match.group(2).lower()[:3]]
+        year = today.year
+    else:
+        dot = DOT_DATE_RE.search(raw)
+        if not dot:
+            return None
+        day = int(dot.group(1))
+        mon = int(dot.group(2))
+        if dot.group(3):
+            year = int(dot.group(3))
+            explicit_year = True
+        else:
+            year = today.year
     try:
-        parsed = date(today.year, mon, day)
+        parsed = date(year, mon, day)
     except ValueError:
         return None
-    if parsed < today and allow_next_year:
+    if not explicit_year and parsed < today and allow_next_year:
         try:
             parsed = date(today.year + 1, mon, day)
         except ValueError:

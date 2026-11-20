@@ -56,10 +56,17 @@ class MdmScraper(HtmlVenueScraper):
             hall = place.get_text(" ", strip=True) if place else ""
             link = item.select_one('a[href*="/show/"]') or item.select_one("a[href]")
             href = (link.get("href") if link else "") or LISTING_URL
-            img = item.select_one("img[src], img[data-src]")
+            img = item.select_one("img[data-src], img[data-lazy-src], img[src]")
             image_src = None
             if img:
-                image_src = img.get("src") or img.get("data-src")
+                image_src = (
+                    img.get("data-src")
+                    or img.get("data-lazy-src")
+                    or img.get("data-original")
+                    or img.get("src")
+                )
+                if image_src and image_src.startswith("data:"):
+                    image_src = img.get("data-src") or img.get("data-lazy-src")
             show = self.make_show(
                 name=name,
                 url=href,

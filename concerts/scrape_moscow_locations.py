@@ -1,8 +1,8 @@
 """Seed Moscow venues: official playbills where HTML is stable enough.
 
 Seed list (well-known halls people always go to):
-- theaters: Lenkom, Satire, MXAT, Helikon
-- halls: Zaryadye
+- theaters: Lenkom, Satire, MXAT, Helikon, Sovremennik, Vakhtangov, Taganka
+- halls / clubs: Zaryadye, Gogol Center, 16 Tons, Glavclub, Stereo Plaza-class → Glavclub
 Dedicated scrapers cover StandUp Store, Malaya Bronnaya, Mossovet, MDM.
 Aggregators: scrape_afisha_moscow.py / scrape_yandex_afisha_moscow.py.
 """
@@ -15,23 +15,23 @@ from datetime import datetime
 from bs4 import BeautifulSoup
 
 from moscow_common import MOSCOW_CITY, parse_ru_date, parse_ru_time
-from vienna_common import HtmlVenueScraper, ViennaShow, absolute_url
+from vienna_common import HtmlVenueScraper, ViennaShow, absolute_url, listing_image_src
 
 # (source_channel, listing_url, venue_label, css_item, name_sel, link_sel)
 LOCATIONS = (
     (
         "lenkom",
-        "https://lenkom.ru/afisha/",
+        "https://lenkom.ru/",
         "Ленком",
-        "a[href*='/shows/'], .afisha-item, .event, article",
+        "a[href*='/shows/'], a[href*='/spectacle'], .afisha-item, .event, article",
         None,
         None,
     ),
     (
         "satire",
-        "https://satire.ru/repertoire/",
+        "https://satire.ru/",
         "Театр Сатиры",
-        ".repertoire-item, .afisha-item, .event, article, a[href*='/spectacle']",
+        ".repertoire-item, .afisha-item, .event, article, a[href*='/spectacle'], a[href*='/repertoire']",
         None,
         None,
     ),
@@ -39,26 +39,36 @@ LOCATIONS = (
         "mxat",
         "https://mxat.ru/afisha/",
         "МХАТ",
-        ".afisha__item, .event, article, a[href*='/performance']",
+        ".afisha__item, .event, article, a[href*='/performance'], a[href*='/afisha']",
         None,
         None,
     ),
     (
         "helikon",
-        "https://www.helikon.ru/ru/afisha/",
+        "https://www.helikon.ru/",
         "Геликон-опера",
-        ".afisha-item, .event, article, a[href*='/spectacle'], a[href*='/afisha']",
+        "a[href*='/performances/'], .afisha-item, .event, article",
+        None,
+        None,
+    ),
+    # Zaryadye → dedicated scrape_zaryadye.py (.events__item + day headers)
+    (
+        "sovremennik",
+        "https://www.sovremennik.ru/plays/repertoire/all",
+        "Современник",
+        "a[href*='/plays/'], .afisha-item, .event, article",
         None,
         None,
     ),
     (
-        "zaryadye",
-        "https://zaryadyehall.ru/afisha/",
-        "Зарядье",
-        ".afisha-item, .event-card, .event, article, a[href*='/event']",
+        "vakhtangov",
+        "https://www.vakhtangov.ru/afisha/",
+        "Вахтангова",
+        "a[href*='/shows/'], a[href*='/show'], .show-item, .afisha-item, .event, article",
         None,
         None,
     ),
+    # 16 Tons → dedicated scrape_sixteen_tons.py (real titles + posters)
 )
 
 
@@ -100,12 +110,18 @@ class MoscowLocationScraper(HtmlVenueScraper):
             if key in seen:
                 continue
             seen.add(key)
+            image_src = listing_image_src(item)
+            if not image_src:
+                img = item.select_one("img[data-src], img[src]")
+                if img:
+                    image_src = img.get("data-src") or img.get("src")
             show = self.make_show(
                 name=name,
                 url=href,
                 start=start,
                 start_time=parse_ru_time(text),
                 venue=self.venue,
+                image_src=image_src,
                 description=text[:500],
             )
             if show:

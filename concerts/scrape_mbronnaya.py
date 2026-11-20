@@ -44,12 +44,17 @@ class MbronnayaScraper(HtmlVenueScraper):
             time_node = node.select_one(".playbill--item-buyBlock-time")
             start_time = parse_ru_time(time_node.get_text(" ", strip=True) if time_node else text)
             hall = self._hall(text)
+            img = node.select_one("img[src], img[data-src]")
+            image_src = None
+            if img:
+                image_src = img.get("src") or img.get("data-src")
             show = self.make_show(
                 name=name,
                 url=href,
                 start=current_date,
                 start_time=start_time,
                 venue=hall or self.venue,
+                image_src=image_src,
                 description=text[:500],
             )
             if show:
