@@ -1,10 +1,16 @@
-"""Seed Moscow venues: official playbills where HTML is stable enough.
+"""Seed Moscow venues: leftover official playbills not covered by dedicated scrapers.
 
-Seed list (well-known halls people always go to):
-- theaters: Lenkom, Satire, MXAT, Helikon, Sovremennik, Vakhtangov, Taganka
-- halls / clubs: Zaryadye, Gogol Center, 16 Tons, Glavclub, Stereo Plaza-class → Glavclub
-Dedicated scrapers cover StandUp Store, Malaya Bronnaya, Mossovet, MDM.
-Aggregators: scrape_afisha_moscow.py / scrape_yandex_afisha_moscow.py.
+Dedicated scrapers (prefer these):
+- StandUp Store, Malaya Bronnaya, Mossovet, MDM, 16 Tons, Zaryadye
+- Vakhtangov, Meloman (philharmonic / Tchaikovsky), Luzhniki, Pushkin
+- Lenkom + Satire via scrape_bitrix_afisha.py
+- Afisha schedule + Afisha clubs + Afisha theatres (Taganka, Sovremennik,
+  MXAT/MXT, Helikon, Dom Muzyki, …)
+
+This seed list keeps Helikon / MXAT / Sovremennik homepage probes for future
+HTML that gains stable dates. Official Glavclub / Stereo Hall / Red Club /
+Mumiy Troll / Izvestia Hall are DNS-blocked from Hetzner — rely on Afisha
+when those places reappear in /msk/club/.
 """
 from __future__ import annotations
 
@@ -19,22 +25,6 @@ from vienna_common import HtmlVenueScraper, ViennaShow, absolute_url, listing_im
 
 # (source_channel, listing_url, venue_label, css_item, name_sel, link_sel)
 LOCATIONS = (
-    (
-        "lenkom",
-        "https://lenkom.ru/",
-        "Ленком",
-        "a[href*='/shows/'], a[href*='/spectacle'], .afisha-item, .event, article",
-        None,
-        None,
-    ),
-    (
-        "satire",
-        "https://satire.ru/",
-        "Театр Сатиры",
-        ".repertoire-item, .afisha-item, .event, article, a[href*='/spectacle'], a[href*='/repertoire']",
-        None,
-        None,
-    ),
     (
         "mxat",
         "https://mxat.ru/afisha/",
@@ -51,24 +41,14 @@ LOCATIONS = (
         None,
         None,
     ),
-    # Zaryadye → dedicated scrape_zaryadye.py (.events__item + day headers)
     (
         "sovremennik",
-        "https://www.sovremennik.ru/plays/repertoire/all",
+        "https://www.sovremennik.ru/",
         "Современник",
         "a[href*='/plays/'], .afisha-item, .event, article",
         None,
         None,
     ),
-    (
-        "vakhtangov",
-        "https://www.vakhtangov.ru/afisha/",
-        "Вахтангова",
-        "a[href*='/shows/'], a[href*='/show'], .show-item, .afisha-item, .event, article",
-        None,
-        None,
-    ),
-    # 16 Tons → dedicated scrape_sixteen_tons.py (real titles + posters)
 )
 
 
@@ -96,7 +76,6 @@ class MoscowLocationScraper(HtmlVenueScraper):
             if len(name) < 3 or len(name) > 180:
                 continue
             start = parse_ru_date(text)
-            # ISO dates on some halls
             if start is None:
                 iso = re.search(r"(20\d{2})-(\d{2})-(\d{2})", href + " " + text)
                 if iso:

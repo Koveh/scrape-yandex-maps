@@ -211,12 +211,19 @@ SOURCE_KIND: dict[str, str] = {
     "mdm": "event",
     "afisha_concerts": "concert",
     "afisha_theatre": "event",
+    "afisha_clubs": "concert",
+    "afisha_theatres": "event",
     "yandex_afisha": "concert",
     "lenkom": "event",
     "satire": "event",
     "mxat": "event",
     "helikon": "event",
     "zaryadye": "concert",
+    "sixteen_tons": "concert",
+    "vakhtangov": "event",
+    "meloman": "concert",
+    "luzhniki": "concert",
+    "pushkin": "event",
 }
 
 SOURCE_EXTRAS: dict[str, tuple[str, ...]] = {
@@ -257,11 +264,18 @@ SOURCE_EXTRAS: dict[str, tuple[str, ...]] = {
     "mossovet": ("theater",),
     "mdm": ("theater",),
     "afisha_theatre": ("theater",),
+    "afisha_clubs": ("club",),
+    "afisha_theatres": ("theater",),
     "lenkom": ("theater",),
     "satire": ("theater",),
     "mxat": ("theater",),
     "helikon": ("theater", "classical"),
     "zaryadye": ("classical",),
+    "sixteen_tons": ("club",),
+    "vakhtangov": ("theater",),
+    "meloman": ("classical",),
+    "luzhniki": ("concert",),
+    "pushkin": ("theater",),
     "standupstore": ("comedy",),
 }
 
